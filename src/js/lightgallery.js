@@ -309,7 +309,7 @@ Plugin.prototype.structure = function() {
     }
 
     template = '<div class="lg-outer ' + this.s.addClass + ' ' + this.s.startClass + '">' +
-        '<div class="lg" style="width:' + this.s.width + '; height:' + this.s.height + '">' +
+        '<div class="lg">' +
         '<div class="lg-inner">' + list + '</div>' +
         '<div class="lg-toolbar group">' +
         '<span class="lg-close lg-icon"></span>' +
@@ -320,6 +320,10 @@ Plugin.prototype.structure = function() {
         '</div>';
 
     document.body.insertAdjacentHTML('beforeend', template);
+    const $lg = document.querySelector('.lg');
+    $lg.style.width = this.s.width;
+    $lg.style.height = this.s.height;
+
     this.outer = document.querySelector('.lg-outer');
     this.___slide = this.outer.querySelectorAll('.lg-item');
 
@@ -651,7 +655,8 @@ Plugin.prototype.loadContent = function(index, rec, delay) {
     var _isVideo = _this.isVideo(_src, index);
     if (!utils.hasClass(_this.___slide[index], 'lg-loaded')) {
         if (iframe) {
-            _this.___slide[index].insertAdjacentHTML('afterbegin', '<div class="lg-video-cont" style="max-width:' + _this.s.iframeMaxWidth + '"><div class="lg-video"><iframe class="lg-object" frameborder="0" src="' + _src + '"  allowfullscreen="true"></iframe></div></div>');
+            _this.___slide[index].insertAdjacentHTML('afterbegin', '<div class="lg-video-cont"><div class="lg-video"><iframe class="lg-object" frameborder="0" src="' + _src + '"  allowfullscreen="true"></iframe></div></div>');
+            _this.___slide[index].querySelector('lg-video-cont').style.maxWidth = _this.s.iframeMaxWidth;
         } else if (_hasPoster) {
             var videoClass = '';
             if (_isVideo && _isVideo.youtube) {
